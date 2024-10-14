@@ -23,6 +23,12 @@ void reset_inst_counters() {
   workload_loaded=true;
 }
 
+double size_library_z = 0.0f;
+double size_library_epsilon = 0.0f;
+
+uint64_t sampling_k = 0;
+uint64_t sampling_munit = 1000;
+
 #ifdef CONFIG_SHARE
 // empty definition on share
 void simpoint_profiling(uint64_t pc, bool is_control, uint64_t abs_instr_count) {}

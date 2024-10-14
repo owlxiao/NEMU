@@ -113,6 +113,7 @@ static inline int parse_args(int argc, char *argv[]) {
     {"cpt-mmode"          , no_argument      , NULL, 7},
     {"map-cpt"            , required_argument, NULL, 10},
     {"checkpoint-format"  , required_argument, NULL, 12},
+    {"estimate_k"         , required_argument, NULL, 16},
 
     // profiling
     {"simpoint-profile"   , no_argument      , NULL, 3},
@@ -245,6 +246,14 @@ static inline int parse_args(int argc, char *argv[]) {
         small_log = true;
         break;
       case 14: sscanf(optarg, "%lu", &warmup_interval); break;
+
+      case 16:
+        if (sscanf(optarg, "%lf:%lf", &size_library_z,
+                   &size_library_epsilon) != 2)
+          panic("bad size_library parms: <Z-score>:<pct-error>");
+
+        profiling_state = SmartsProfling;
+        break;
 
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);

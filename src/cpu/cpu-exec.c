@@ -91,6 +91,17 @@ static void update_instr_cnt() {
 void monitor_statistic() {
   update_instr_cnt();
   setlocale(LC_NUMERIC, "");
+  if (profiling_state == SmartsProfling) {
+    Log("Determined checkpoint library size for Z=%2.2f pctError=%2.2f",
+        size_library_z, size_library_epsilon);
+    // k = (benchmark length) / (execution window size) / (recommended sample size)
+    double sqrtn_tuned = size_library_z / (size_library_epsilon / 100);
+    int n_tuned = (int)sqrtn_tuned * sqrtn_tuned;
+    int k = get_abs_instr_count() / n_tuned / sampling_munit;
+
+    Log("Library Size: %d  Corresponding k: %d  Unit Size: %ld", n_tuned, k, sampling_munit);
+  }
+
   Log("host time spent = %'ld us", g_timer);
 #ifdef CONFIG_ENABLE_INSTR_CNT
   Log("total guest instructions = %'ld", g_nr_guest_instr);

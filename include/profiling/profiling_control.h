@@ -6,6 +6,7 @@
 enum ProfilingState{
     NoProfiling =0,
     SimpointProfiling,
+    SmartsProfling,
 };
 
 enum CheckpointState{
@@ -31,5 +32,14 @@ extern bool workload_loaded;
 extern bool donot_skip_boot;
 
 void reset_inst_counters();
+
+// SMARTS
+extern double size_library_z;
+extern double size_library_epsilon;
+// Sampling
+/* sampling k value */
+extern uint64_t sampling_k;
+/* for systematic sampling, the measurement unit size in instructions */
+extern uint64_t sampling_munit;
 
 #endif // __PROFILING_CONTROL_H__
